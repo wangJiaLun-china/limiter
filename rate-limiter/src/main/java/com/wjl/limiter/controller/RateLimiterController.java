@@ -41,4 +41,12 @@ public class RateLimiterController {
             return "fail";
         }
     }
+
+    // 同步阻塞限流
+    @GetMapping("/acquire")
+    public String acquire(Integer count){
+        limiter.acquire(count);
+        log.info("success, rate is {}", limiter.getRate());
+        return "success";
+    }
 }
