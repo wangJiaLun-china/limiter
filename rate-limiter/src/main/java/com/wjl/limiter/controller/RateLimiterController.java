@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author wangJiaLun
  * @date 2022-02-28
@@ -27,4 +29,16 @@ public class RateLimiterController {
         }
     }
 
+
+    // 限定时间非阻塞限流
+    @GetMapping("/tryAcquireWithTimeout")
+    public String tryAcquire(Integer count, Integer timeout){
+        if (limiter.tryAcquire(count, timeout, TimeUnit.SECONDS)) {
+            log.info("success, rate is {}", limiter.getRate());
+            return "success";
+        }else {
+            log.info("fail is {}", limiter.getRate());
+            return "fail";
+        }
+    }
 }
