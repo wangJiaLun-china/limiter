@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: ratelimiter-test
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+logging:
+  file:
+    path: log/${spring.application.name}.log
